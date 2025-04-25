@@ -1,0 +1,70 @@
+{% extends "navbar.html"%}
+
+{% block body %}
+
+{%if prodcat_list%}
+
+
+
+        {%for data in prodcat_list%}
+
+        <section style="background-color: #eee;">
+            <div class="container py-5">
+              <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-4">
+                  <div class="card" style="border-radius: 15px;">
+                    <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+                      data-mdb-ripple-color="light">
+                      {% if data.p_cat_image %}
+
+                      <img src="{{data.p_cat_image.url}}" alt='..' style="width: 100%; height:100%;">
+  
+                  {% else %}
+                      No image uploaded
+                  {% endif %}
+                      <a href="#!">
+                        <div class="mask"></div>
+                      </a>
+                    </div>
+                    <div class="card-body pb-0">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <p><a href="#!" class="text-dark">{{data.p_cat_name}}</a></p>
+
+                        </div>
+
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body pb-0">
+                      <p class="small text-muted">{{data.p_cat_desc}}</p>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+                        <a href="{% url 'edit-prodcat' data.id %}" >Edit</a>
+                        <button onclick="redirectToURL('{% url 'delete-prodcat' data.id %}')" type="button" class="btn btn-primary">Delete</button>
+                        <script>
+                            function redirectToURL(url) {
+                              window.location.href = url;
+                            }
+                          </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        
+        {%endfor%}
+
+{% else %}
+
+No product category found
+
+{% endif %}
+
+{% endblock body %}

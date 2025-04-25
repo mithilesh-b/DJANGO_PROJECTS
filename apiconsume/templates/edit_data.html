@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Edit Company Data | {% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Edit Company Data</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ data.name }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" class="form-control" id="location" name="location" value="{{ data.location }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="about">About:</label>
+            <textarea class="form-control" id="about" name="about" rows="3" required>{{ data.about }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select class="form-control" id="type" name="type" required>
+                <option value="IT" {% if data.type == "IT" %}selected{% endif %}>IT</option>
+                <option value="INFRA" {% if data.type == "INFRA" %}selected{% endif %}>Infrastructure</option>
+                <option value="COMM" {% if data.type == "COMM" %}selected{% endif %}>Communication</option>
+            </select>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="active" name="active" {% if data.active %}checked{% endif %}>
+            <label class="form-check-label" for="active">Active</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+{% endblock %}

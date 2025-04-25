@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Expense Record</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+   
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('/static/Images/inr.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+    }
+    
+    h1,h2 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 2em;
+        color: #ffffff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+    
+    form {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    label {
+        display: block;
+        margin: 15px 0 5px;
+        font-size: 1.2em;
+    }
+    
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        font-size: 1em;
+        outline: none;
+        transition: background 0.5s, box-shadow 0.1s;
+    }
+    
+    input:focus, textarea:focus {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+    }
+    
+    button {
+        display: block;
+        width: calc(20% - 10px);
+        padding: 15px;
+        margin: 30px 5px;
+
+        background: linear-gradient(45deg, #007BFF, #00d4ff);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background 0.3s, box-shadow 0.3s;
+    }
+    
+    button[type="button"] {
+        background: linear-gradient(45deg, #28a745, #00ff85);
+    }
+    
+    button:hover {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    
+    button:active {
+        transform: scale(0.98);
+    }
+    
+    /* Container for the expense entries */
+    #expenses-container {
+        margin-bottom: 20px;
+    }
+    
+    .expense-entry {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    
+</style>
+<body>
+    <form id="expense-form">
+        <div id="expenses-container">
+            <h1>Daily Expense Track Record</h1>
+            <div class="expense-entry">
+                <label for="expense-date">Enter the Date of event</label>
+                <input type="date" class="expense-date" name="expense-date" required>
+                
+                <label for="expense-category">Enter the catagory of the Event</label>
+                <input type="text" class="expense-category" name="expense-category" required>
+                
+                <label for="expense-amount">Enter the Total amount that spend</label>
+                <input type="number" class="expense-amount" name="expense-amount" step="0.01" required>
+                
+                <label for="expense-description">Write the description about the Event</label>
+                <textarea class="expense-description" name="expense-description"></textarea>
+            </div>
+        </div>
+        <button type="button" onclick="addExpenseEntry()"><i class="fa-solid fa-plus fa-lg" style="color: #000000;"></i> Add more</button>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="scripts.js"></script>
+</body>
+<script>
+    document.getElementById('expense-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        let expenses = [];
+        const expenseEntries = document.querySelectorAll('.expense-entry');
+        
+        expenseEntries.forEach(entry => {
+            const date = entry.querySelector('.expense-date').value;
+            const category = entry.querySelector('.expense-category').value;
+            const amount = entry.querySelector('.expense-amount').value;
+            const description = entry.querySelector('.expense-description').value;
+    
+            expenses.push({ date, category, amount, description });
+        });
+    
+        console.log('Expenses to submit:', expenses);
+    
+        // Process the expenses array (e.g., send it to the server)
+    
+        // Clear the form
+        expenseEntries.forEach(entry => entry.remove());
+        addExpenseEntry();
+    });
+    
+    function addExpenseEntry() {
+        const expensesContainer = document.getElementById('expenses-container');
+        
+        const expenseEntry = document.createElement('div');
+        expenseEntry.classList.add('expense-entry');
+        
+        expenseEntry.innerHTML = `
+        <h2>New section added</h2>
+            <label for="expense-date">Enter the Date of event</label>
+            <input type="date" class="expense-date" name="expense-date" required>
+            
+            <label for="expense-category">Enter the catagory of the Event</label>
+            <input type="text" class="expense-category" name="expense-category" required>
+            
+            <label for="expense-amount">Enter the Total amount that spend</label>
+            <input type="number" class="expense-amount" name="expense-amount" step="0.01" required>
+            
+            <label for="expense-description">Write the description about the Event</label>
+            <textarea class="expense-description" name="expense-description"></textarea>
+        `;
+    
+        expensesContainer.appendChild(expenseEntry);
+    }
+    
+    // Add the initial expense entry
+    addExpenseEntry();
+    
+</script>
+</html>
